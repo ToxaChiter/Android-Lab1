@@ -46,7 +46,7 @@ public partial class MainPage : ContentPage
 
         Pin pin = new Pin
         {
-            Label = "Anton Lobarev",
+            Label = AlertTitle,
             Address = $"{latitude}, {longitude}",
             Type = PinType.Place,
             Location = new Location(latitude, longitude)
