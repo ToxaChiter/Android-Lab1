@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Lab1.MainPage"
+             xmlns:maps="http://schemas.microsoft.com/dotnet/2021/maui/maps">
+
+    <Grid>
+        <maps:Map x:Name="map" IsShowingUser="true" MapClicked="OnMapClicked"/>
+        <Label Text="Anton Lobarev" FontSize="80" FontAttributes="Italic" Opacity="0.5" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Rotation="-45"/>
+    </Grid>
+    
+</ContentPage>
