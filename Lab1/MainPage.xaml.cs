@@ -15,7 +15,7 @@ public partial class MainPage : ContentPage
         InitializeComponent();
         WaterMarkLabel.Text = WaterMark1;
     }
-    
+
     private void PickerSelectedIndexChanged(object? sender, EventArgs e)
     {
         switch (MapTypePicker.SelectedIndex)
@@ -31,18 +31,18 @@ public partial class MainPage : ContentPage
                 break;
         }
 
-        
+
     }
 
     private void TrafficSwitch_OnToggled(object? sender, ToggledEventArgs e)
     {
         GMap.IsTrafficEnabled = TrafficSwitch.IsToggled;
-
+    }
     void OnMapClicked(object sender, MapClickedEventArgs e)
     {
         (double latitude, double longitude) = (e.Location.Latitude, e.Location.Longitude);
 
-        map.Pins.Clear();
+        GMap.Pins.Clear();
 
         Pin pin = new Pin
         {
@@ -51,6 +51,6 @@ public partial class MainPage : ContentPage
             Type = PinType.Place,
             Location = new Location(latitude, longitude)
         };
-        map.Pins.Add(pin);
+        GMap.Pins.Add(pin);
     }
 }
