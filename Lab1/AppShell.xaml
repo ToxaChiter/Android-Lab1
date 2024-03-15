@@ -5,7 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:Lab1"
     Shell.FlyoutBehavior="Disabled"
-    Title="Lab1">
+    Title="GeoLabs">
 
     <ShellContent
         ContentTemplate="{DataTemplate local:MainPage}"
