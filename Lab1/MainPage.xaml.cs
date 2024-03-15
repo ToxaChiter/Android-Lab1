@@ -3,6 +3,7 @@
 namespace Lab1;
 
 using Microsoft.Maui.Controls.Maps;
+using Microsoft.Maui.Maps;
 using Map = Microsoft.Maui.Controls.Maps.Map;
 
 public partial class MainPage : ContentPage
@@ -36,5 +37,20 @@ public partial class MainPage : ContentPage
     private void TrafficSwitch_OnToggled(object? sender, ToggledEventArgs e)
     {
         GMap.IsTrafficEnabled = TrafficSwitch.IsToggled;
+
+    void OnMapClicked(object sender, MapClickedEventArgs e)
+    {
+        (double latitude, double longitude) = (e.Location.Latitude, e.Location.Longitude);
+
+        map.Pins.Clear();
+
+        Pin pin = new Pin
+        {
+            Label = "Anton Lobarev",
+            Address = $"{latitude}, {longitude}",
+            Type = PinType.Place,
+            Location = new Location(latitude, longitude)
+        };
+        map.Pins.Add(pin);
     }
 }
