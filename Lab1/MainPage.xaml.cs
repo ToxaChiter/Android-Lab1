@@ -15,6 +15,9 @@ public partial class MainPage : ContentPage
         InitializeComponent();
         WaterMarkLabel.Text = WaterMark1;
         MapTypePicker.SelectedIndex = 0;
+
+        MapSpan span = new MapSpan(new Location(52.1, 23.76), 0.02, 0.05);
+        GMap.MoveToRegion(span);
     }
 
     private void PickerSelectedIndexChanged(object? sender, EventArgs e)
