@@ -5,8 +5,28 @@
              xmlns:maps="http://schemas.microsoft.com/dotnet/2021/maui/maps">
 
     <Grid>
-        <maps:Map x:Name="map" IsShowingUser="true" MapClicked="OnMapClicked"/>
-        <Label Text="Anton Lobarev" FontSize="80" FontAttributes="Italic" Opacity="0.5" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Rotation="-45"/>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Picker Grid.Column="0" Grid.Row="1" x:Name="MapTypePicker" Title = "Map Type"
+                SelectedIndexChanged="PickerSelectedIndexChanged">
+            <Picker.Items>
+                <x:String>Street</x:String>
+                <x:String>Satellite</x:String>
+                <x:String>Hybrid</x:String>
+            </Picker.Items>
+        </Picker>
+        <HorizontalStackLayout Grid.Row="1" Grid.Column="1">
+            <Switch x:Name="TrafficSwitch" IsToggled="True" Toggled="TrafficSwitch_OnToggled"></Switch>
+            <Label  Text="Show Traffic" VerticalTextAlignment="Center"></Label>
+        </HorizontalStackLayout>
+        <maps:Map Grid.Row="0" Grid.ColumnSpan="2" x:Name="GMap" IsShowingUser="true"/>
+        <Label x:Name="WaterMarkLabel" FontSize="80" FontAttributes="Italic" Opacity="0.5" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Rotation="-45"/>
     </Grid>
     
 </ContentPage>

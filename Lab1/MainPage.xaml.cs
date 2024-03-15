@@ -1,17 +1,40 @@
-﻿namespace Lab1;
+﻿using Microsoft.Maui.Maps;
+
+namespace Lab1;
 
 using Microsoft.Maui.Controls.Maps;
 using Map = Microsoft.Maui.Controls.Maps.Map;
 
 public partial class MainPage : ContentPage
 {
+    private const string WaterMark1 = "Butik Lobarev";
+    private const string AlertTitle = "Butik Lobarev says";
     public MainPage()
     {
         InitializeComponent();
+        WaterMarkLabel.Text = WaterMark1;
+    }
+    
+    private void PickerSelectedIndexChanged(object? sender, EventArgs e)
+    {
+        switch (MapTypePicker.SelectedIndex)
+        {
+            case 0:
+                GMap.MapType = MapType.Street;
+                break;
+            case 1:
+                GMap.MapType = MapType.Satellite;
+                break;
+            case 2:
+                GMap.MapType = MapType.Hybrid;
+                break;
+        }
+
+        
     }
 
-    async void OnMapClicked(object sender, MapClickedEventArgs e)
+    private void TrafficSwitch_OnToggled(object? sender, ToggledEventArgs e)
     {
-        await DisplayAlert("Lobarev says", $"Latitude: {e.Location.Latitude}, Longitude: {e.Location.Longitude}", "OK");
+        GMap.IsTrafficEnabled = TrafficSwitch.IsToggled;
     }
 }
