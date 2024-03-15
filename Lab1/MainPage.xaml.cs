@@ -8,12 +8,13 @@ using Map = Microsoft.Maui.Controls.Maps.Map;
 
 public partial class MainPage : ContentPage
 {
-    private const string WaterMark1 = "Butik Lobarev";
-    private const string AlertTitle = "Butik Lobarev says";
+    private const string WaterMark1 = "Burtik Lobarev";
+    private const string AlertTitle = "Burtik Lobarev says";
     public MainPage()
     {
         InitializeComponent();
         WaterMarkLabel.Text = WaterMark1;
+        MapTypePicker.SelectedIndex = 0;
     }
 
     private void PickerSelectedIndexChanged(object? sender, EventArgs e)
