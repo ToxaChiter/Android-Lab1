@@ -1,4 +1,5 @@
-﻿using Microsoft.Maui.Maps;
+﻿using System.Collections.ObjectModel;
+using Microsoft.Maui.Maps;
 
 namespace Lab1;
 
@@ -10,6 +11,7 @@ public partial class MainPage : ContentPage
 {
     private const string WaterMark1 = "Burtik Lobarev";
     private const string AlertTitle = "Burtik Lobarev says";
+    private ObservableCollection<string> pins = new ObservableCollection<string>();
     private List<Pin> _savedPins = new List<Pin>();
     private Pin _selectedPin;
     private Pin _latestPin;
@@ -46,14 +48,11 @@ public partial class MainPage : ContentPage
 
     private void LoadDataPicker()
     {
-        List<string> pins = new List<string>();
         foreach (var pin in _savedPins)
         {
             pins.Add(pin.Label);
         }
         PinsPicker.ItemsSource = pins;
-        
-
     }
     private void PickerSelectedIndexChanged(object? sender, EventArgs e)
     {
@@ -77,7 +76,7 @@ public partial class MainPage : ContentPage
     {
         GMap.IsTrafficEnabled = TrafficSwitch.IsToggled;
     }
-    void OnMapClicked(object sender, MapClickedEventArgs e)
+    async void OnMapClicked(object sender, MapClickedEventArgs e)
     {
         (double latitude, double longitude) = (e.Location.Latitude, e.Location.Longitude);
 
@@ -91,13 +90,14 @@ public partial class MainPage : ContentPage
             Location = new Location(latitude, longitude)
         };
         GMap.Pins.Add(pin);
+        AddButton.IsVisible = true;
+        PinNameEntry.IsVisible = true;
         _latestPin = pin;
     }
-
     
-
     private void PinsPicker_OnSelectedIndexChanged(object? sender, EventArgs e)
     {
+        if(_savedPins.Count == 0) return;
         _selectedPin = _savedPins[PinsPicker.SelectedIndex];
         if (GMap.Pins.Contains(_selectedPin))
         {
@@ -108,6 +108,7 @@ public partial class MainPage : ContentPage
             HideCheckBox.IsChecked = false;
         }
         PinGrid.IsVisible = true;
+        
     }
 
     private void HideCheckBox_OnCheckedChanged(object? sender, CheckedChangedEventArgs e)
@@ -129,17 +130,36 @@ public partial class MainPage : ContentPage
 
     private void DeletePinButton_OnClicked(object? sender, EventArgs e)
     {
+        
         GMap.Pins.Remove(_selectedPin);
         _savedPins.Remove(_selectedPin);
+        pins.Remove(_selectedPin.Label);
+        
         if (_savedPins.Count != 0)
         {
-            _selectedPin = _savedPins[0];
+              _selectedPin = _savedPins[0];
         }
         else
         {
             PinGrid.IsVisible = false;
         }
-       // LoadDataPicker();
-        
+    }
+
+    private void SaveButton_OnClicked(object? sender, EventArgs e)
+    {
+        _savedPins.Add(_latestPin);
+    }
+
+    private void AddButton_OnClicked(object? sender, EventArgs e)
+    {
+        if(PinNameEntry.Text.Length == 0) return;
+        _savedPins.Add(new Pin
+        {
+            Label = PinNameEntry.Text,
+            Address = $"{_latestPin.Location.Latitude}, {_latestPin.Location.Longitude}",
+            Type = PinType.Place,
+            Location = new Location(_latestPin.Location.Latitude, _latestPin.Location.Longitude)
+        });
+        pins.Add(PinNameEntry.Text);
     }
 }
